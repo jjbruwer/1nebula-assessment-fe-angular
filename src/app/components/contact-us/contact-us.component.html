@@ -1,11 +1,49 @@
-<div *ngFor="let contact of contactsInfo">
-    <p>
-	    {{contact.firstName}}<br />
-	    {{contact.lastName}}<br />
-	    {{contact.email}}<br />
-	    {{contact.address}}<br />
-	    {{contact.cellNumber}}<br />
-	    {{contact.bio}}<br />
-	    {{contact.firstName}}
-    </p>
+<div class="user-list row">
+    <div class="name-list col-3 px-4 py-5">
+    	<div class="search-bar">
+	        <input type="text" [(ngModel)]="searchText" placeholder="Search">
+	    </div>
+    	<h3 class="contactsH">CONTACTS</h3>
+        <ul>
+            <li *ngFor="let user of filteredUsers; let i = index" (click)="selectUser(i)" class="px-3 py-2 mb-1">
+            	<div class="initials">
+            		{{ user.firstName.charAt(0) }} {{ user.lastName.charAt(0) }}
+            	</div>
+                <p><span class="names">{{ user.firstName }} {{ user.lastName }}</span><br />
+                <span class="number">{{ user.cellNumber }}</span></p>
+            </li>
+        </ul>
+    </div>
+    <div class="user-details col-8 p-5">
+        <div *ngIf="selectedUser !== null">
+        	<mat-card class="example-card shadow">
+			  <mat-card-header class="p-5">
+			    <mat-card-title>{{ users[selectedUser].firstName }} {{ users[selectedUser].lastName }}</mat-card-title>
+			  </mat-card-header>
+			  <mat-card-content class="px-5 pb-5">
+			  	<div class="row">
+			  		<div class="col-6">
+			  			<p class="entryInfo"><span>Email:</span><br />
+			  			<a href="mailto:{{ users[selectedUser].email }}">{{ users[selectedUser].email }}</a></p>
+			  		</div>
+			  		<div class="col-6">
+	            		<p class="entryInfo"><span>Address:</span><br />
+	            		{{ users[selectedUser].address }}</p>
+			  		</div>
+			  	</div>
+			  	<div class="row">
+			  		<div class="col-6">
+			            <p class="entryInfo"><span>Cell Number:</span><br />
+			            {{ users[selectedUser].cellNumber }}</p>
+			  		</div>
+			  		<div class="col-6"></div>
+			  	</div>
+			  </mat-card-content>
+			</mat-card>
+			<br />
+			<br />
+			<h2>Contact Bio</h2>
+            <p>{{ users[selectedUser].bio }}</p>
+        </div>
+    </div>
 </div>
